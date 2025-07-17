@@ -79,6 +79,52 @@ This architecture enables continuous skill transfer through the collaboration of
 
 ![](./docs/imgs/arch-video-pipeline.png)
 
+## Quick Start (CloudShell Deployment)
+
+You can deploy directly from your browser using AWS CloudShell without preparing a local environment.
+
+1. **Enable Amazon Bedrock Models**
+
+   - Access [Bedrock model access](https://us-west-2.console.aws.amazon.com/bedrock/home?region=us-west-2#/modelaccess) from the AWS Management Console and enable access to the following models:
+     - Anthropic Claude 3 (any version)
+     - Amazon Titan Embedding G1 - Text
+   - Enable the Titan Embedding model in your deployment region (default: ap-northeast-1) and the Claude model in the us-west-2 region.
+
+2. **Open AWS CloudShell**
+
+   - Open [AWS CloudShell](https://console.aws.amazon.com/cloudshell/home) in the region where you want to deploy.
+
+3. **Run the Deployment Script**
+
+   ```bash
+   wget -O - https://raw.githubusercontent.com/aws-samples/knowledge-transfer-by-genai/main/bin.sh | bash
+   ```
+
+   This one-liner command automatically executes everything from cloning the repository to deployment.
+
+4. **Specify Custom Parameters (Optional)**
+
+   ```bash
+   wget -O - https://raw.githubusercontent.com/aws-samples/knowledge-transfer-by-genai/main/bin.sh | bash -s -- --ipv4-ranges '["192.168.0.0/16"]'
+   ```
+
+   Available options:
+
+   - `--ipv4-ranges`: IPv4 address ranges to allow in the frontend WAF (JSON array format)
+   - `--ipv6-ranges`: IPv6 address ranges to allow in the frontend WAF (JSON array format)
+   - `--disable-ipv6`: Disable IPv6 support
+   - `--bedrock-region`: Region to use Bedrock models (default: us-west-2)
+   - `--region`: Deployment region (default: current AWS CLI region setting)
+   - `--repo-url`: URL of the repository to deploy
+   - `--branch`: Branch name to deploy
+   - `--tag`: Specific Git tag to deploy
+
+5. **Post-Deployment Confirmation**
+   When deployment is complete, the frontend URL will be displayed. Access the displayed URL to start using the application.
+
+> [!Important]
+> For production environments, we strongly recommend adding IP address restrictions.
+
 ## Contents
 
 - [Deployment Instructions](./docs/deploy_en.md)
