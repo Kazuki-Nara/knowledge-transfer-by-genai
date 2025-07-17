@@ -25,6 +25,7 @@ const usEast1Stack = new UsEast1Stack(app, "UsEast1Stack", {
 });
 
 const mainStack = new KnowledgeTransferStack(app, "KnowledgeTransferStack", {
+  description: "Knowledge Transfer by GenAI (uksb-m8u2tiddhi)",
   crossRegionReferences: true,
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
