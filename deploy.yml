@@ -188,8 +188,7 @@ Resources:
                   "echo 'CDKデプロイの準備...'",
                   "npm ci",
                   "echo 'CDKブートストラップを実行中...'",
-                  "npx cdk bootstrap aws://$AWS_ACCOUNT_ID/us-east-1",
-                  "npx cdk bootstrap aws://$AWS_ACCOUNT_ID/$DEPLOYMENT_REGION",
+                  "npx cdk bootstrap",
                   "echo 'CDKデプロイを実行中...'",
                   "npx cdk deploy --all --require-approval never"
                 ]
