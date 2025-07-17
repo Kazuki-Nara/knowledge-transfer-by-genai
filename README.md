@@ -79,6 +79,52 @@
 
 ![](./docs/imgs/arch-video-pipeline.png)
 
+## クイックスタート（CloudShell デプロイ）
+
+AWS CloudShell を使用して、ローカル環境の準備なしでブラウザから直接デプロイできます。
+
+1. **Amazon Bedrock モデルの有効化**
+
+   - AWS Management Console から [Bedrock モデルアクセス](https://us-west-2.console.aws.amazon.com/bedrock/home?region=us-west-2#/modelaccess)にアクセスし、以下のモデルへのアクセスを有効化してください：
+     - Anthropic Claude 3 (任意のバージョン)
+     - Amazon Titan Embedding G1 - Text
+   - デプロイ先リージョン（デフォルト: ap-northeast-1）で Titan Embedding モデルを、us-west-2 リージョンで Claude モデルを有効化してください。
+
+2. **AWS CloudShell を開く**
+
+   - [AWS CloudShell](https://console.aws.amazon.com/cloudshell/home)をデプロイしたいリージョンで開きます。
+
+3. **デプロイスクリプトの実行**
+
+   ```bash
+   wget -O - https://raw.githubusercontent.com/aws-samples/knowledge-transfer-by-genai/main/bin.sh | bash
+   ```
+
+   このワンライナーコマンドで、リポジトリのクローンからデプロイまでが自動的に実行されます。
+
+4. **カスタムパラメータの指定（オプション）**
+
+   ```bash
+   wget -O - https://raw.githubusercontent.com/aws-samples/knowledge-transfer-by-genai/main/bin.sh | bash -s -- --ipv4-ranges '["192.168.0.0/16"]'
+   ```
+
+   利用可能なオプション：
+
+   - `--ipv4-ranges`: フロントエンド WAF で許可する IPv4 アドレス範囲（JSON 配列形式）
+   - `--ipv6-ranges`: フロントエンド WAF で許可する IPv6 アドレス範囲（JSON 配列形式）
+   - `--disable-ipv6`: IPv6 サポートを無効にする
+   - `--bedrock-region`: Bedrock モデルを利用するリージョン（デフォルト: us-west-2）
+   - `--region`: デプロイ先リージョン（デフォルト: 現在の AWS CLI リージョン設定）
+   - `--repo-url`: デプロイするリポジトリの URL
+   - `--branch`: デプロイするブランチ名
+   - `--tag`: デプロイする特定の Git タグ
+
+5. **デプロイ後の確認**
+   デプロイが完了すると、フロントエンド URL が表示されます。表示された URL にアクセスして、アプリケーションを利用開始できます。
+
+> [!Important]
+> 本番環境での使用には、IP アドレス制限の追加を強くお勧めします。
+
 ## コンテンツ
 
 - [デプロイ方法](./docs/deploy.md)

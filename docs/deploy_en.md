@@ -1,5 +1,14 @@
 # Deployment Instructions
 
+There are two ways to deploy this application:
+
+1. **CloudShell Deployment** (recommended for quick start)
+
+   - For details, please see the "Quick Start (CloudShell Deployment)" section in [README-en.md](../README-en.md#quick-start-cloudshell-deployment).
+
+2. **CDK Deployment** (recommended for customization)
+   - For details, please see the "[Deploying with CDK](#deploying-with-cdk)" section below.
+
 ## Enabling Generative AI Models
 
 You need to enable the generative AI models from the AWS Management Console. Two types of models need to be enabled: the embedding model (Titan Embed Text v1) and the chat response model (Claude 3).
