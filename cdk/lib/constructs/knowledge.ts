@@ -15,8 +15,9 @@ import {
   BedrockFoundationModel,
   ChunkingStrategy,
   S3DataSource,
+  VectorKnowledgeBase,
 } from "@cdklabs/generative-ai-cdk-constructs/lib/cdk-lib/bedrock";
-import { KnowledgeBase } from "@cdklabs/generative-ai-cdk-constructs/lib/cdk-lib/bedrock";
+import { CfnKnowledgeBase } from "aws-cdk-lib/aws-bedrock";
 
 export interface KnowledgeProps {
   embeddingsModel?: BedrockFoundationModel;
@@ -38,6 +39,8 @@ export class Knowledge extends Construct {
   readonly knowledgeBaseId: string;
   readonly knowledgeBaseArn: string;
   readonly dataSourceId: string;
+  readonly ref: VectorKnowledgeBase;
+
   constructor(scope: Construct, id: string, props: KnowledgeProps) {
     super(scope, id);
 
@@ -45,11 +48,12 @@ export class Knowledge extends Construct {
       props.embeddingsModel ?? BedrockFoundationModel.TITAN_EMBED_TEXT_V1;
     const analyzer = props.analyzer ?? DEFAULT_JA_ANALYZER;
     const instruction = props.instruction;
+
     const chunkingStrategy = props.chunkingStrategy ?? ChunkingStrategy.DEFAULT;
-    const maxTokens = props.maxTokens ?? 512;
-    const overlapPercentage = props.overlapPercentage ?? 10;
 
     const vectorCollection = new VectorCollection(this, "KBVectors");
+
+    // Updated VectorIndex with required properties
     const vectorIndex = new VectorIndex(this, "KBIndex", {
       collection: vectorCollection,
       // DO NOT CHANGE THIS VALUE
@@ -70,9 +74,11 @@ export class Knowledge extends Construct {
         },
       ],
       analyzer,
+      precision: "2",
+      distanceType: "l2",
     });
 
-    const kb = new KnowledgeBase(this, "KB", {
+    const kb = new VectorKnowledgeBase(this, "KB", {
       description: "Industrial Knowledge Transfer By GenAI",
       embeddingsModel,
       vectorStore: vectorCollection,
@@ -80,18 +86,18 @@ export class Knowledge extends Construct {
       instruction,
     });
 
+    // Create data source with updated properties
     const dataSource = new S3DataSource(this, "DataSource", {
       bucket: props.knowledgeBucket,
       knowledgeBase: kb,
       dataSourceName: props.knowledgeBucket.bucketName,
       chunkingStrategy,
-      maxTokens,
-      overlapPercentage,
     });
 
     this.knowledgeBaseId = kb.knowledgeBaseId;
     this.knowledgeBaseArn = kb.knowledgeBaseArn;
     this.dataSourceId = dataSource.dataSourceId;
+    this.ref = kb;
 
     new CfnOutput(this, "KnowledgeBaseId", {
       value: kb.knowledgeBaseId,

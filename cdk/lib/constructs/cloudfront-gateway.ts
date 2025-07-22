@@ -27,7 +27,7 @@ import { Auth } from "./auth";
 import { NagSuppressions } from "cdk-nag";
 import {
   FunctionUrlOrigin,
-  S3Origin,
+  S3BucketOrigin,
 } from "aws-cdk-lib/aws-cloudfront-origins";
 import { UsEast1Stack } from "../us-east-1-stack";
 import { IFunction, IFunctionUrl } from "aws-cdk-lib/aws-lambda";
@@ -89,7 +89,9 @@ export class CloudFrontGateway extends Construct {
       comment: "Industrial Knowledge Transfer By GenAI",
       defaultRootObject: "index.html",
       defaultBehavior: {
-        origin: new S3Origin(assetBucket, { originAccessIdentity }),
+        origin: S3BucketOrigin.withOriginAccessIdentity(assetBucket, {
+          originAccessIdentity,
+        }),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         allowedMethods: AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         cachePolicy: CachePolicy.CACHING_OPTIMIZED,
@@ -105,15 +107,15 @@ export class CloudFrontGateway extends Construct {
         {
           httpStatus: 403,
           responseHttpStatus: 200,
-          responsePagePath: '/index.html',
-          ttl: Duration.minutes(0)
+          responsePagePath: "/index.html",
+          ttl: Duration.minutes(0),
         },
         {
           httpStatus: 404,
           responseHttpStatus: 200,
-          responsePagePath: '/index.html',
-          ttl: Duration.minutes(0)
-        }
+          responsePagePath: "/index.html",
+          ttl: Duration.minutes(0),
+        },
       ],
     });
     this.distribution = distribution;
@@ -193,18 +195,24 @@ export class CloudFrontGateway extends Construct {
       originCustomHeaders
     );
 
-    this.distribution.addBehavior(path, new S3Origin(bucket), {
-      // cachePolicy: CachePolicy.CACHING_OPTIMIZED,
-      cachePolicy: CachePolicy.CACHING_DISABLED,
-      allowedMethods: AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
-      edgeLambdas: [
-        {
-          functionVersion: this.usEast1Stack.versionArn(bucket),
-          eventType: LambdaEdgeEventType.ORIGIN_REQUEST,
-          includeBody: true,
-        },
-      ],
-    });
+    this.distribution.addBehavior(
+      path,
+      S3BucketOrigin.withOriginAccessIdentity(bucket, {
+        originAccessIdentity: this.oac,
+      }),
+      {
+        // cachePolicy: CachePolicy.CACHING_OPTIMIZED,
+        cachePolicy: CachePolicy.CACHING_DISABLED,
+        allowedMethods: AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
+        edgeLambdas: [
+          {
+            functionVersion: this.usEast1Stack.versionArn(bucket),
+            eventType: LambdaEdgeEventType.ORIGIN_REQUEST,
+            includeBody: true,
+          },
+        ],
+      }
+    );
   }
 
   addLambda(handler: IFunction, furl: IFunctionUrl, path: string, auth: Auth) {
