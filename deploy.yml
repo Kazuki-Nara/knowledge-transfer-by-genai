@@ -165,7 +165,8 @@ Resources:
                 "on-failure": "ABORT",
                 "commands": [
                   "npm install -g npm@latest",
-                  "npm install -g esbuild"
+                  "npm install -g esbuild",
+                  "npm install -g typescript"
                 ]
               },
               "build": {
