@@ -8,9 +8,9 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk",
-    "postinstall": "cd lib/constructs/lambda && npm ci"
+    "cdk": "cdk"
   },
+  
   "devDependencies": {
     "@aws-prototyping-sdk/pdk-nag": "^0.19.68",
     "@types/jest": "^29.5.12",

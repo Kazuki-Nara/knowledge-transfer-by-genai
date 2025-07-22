@@ -8,8 +8,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +21,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.623.0",
     "@aws-sdk/lib-dynamodb": "^3.623.0",
+    "@aws-sdk/util-dynamodb": "^3.623.0",
     "typescript": "^5.5.4",
     "uuid": "^10.0.0"
   }

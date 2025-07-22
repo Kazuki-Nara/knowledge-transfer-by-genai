@@ -166,7 +166,8 @@ Resources:
                 "commands": [
                   "npm install -g npm@latest",
                   "npm install -g esbuild",
-                  "npm install -g typescript"
+                  "npm install -g typescript@5.8.3",
+                  "npm install -g turbo@2.0.14"
                 ]
               },
               "build": {
