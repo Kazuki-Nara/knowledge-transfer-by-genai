@@ -5,6 +5,7 @@ import * as sfn from "aws-cdk-lib/aws-stepfunctions";
 import * as tasks from "aws-cdk-lib/aws-stepfunctions-tasks";
 import * as events from "aws-cdk-lib/aws-events";
 import * as targets from "aws-cdk-lib/aws-events-targets";
+import * as logs from "aws-cdk-lib/aws-logs";
 import { Construct } from "constructs";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import * as path from "path";
@@ -37,10 +38,11 @@ export class VideoSummaryGenerator extends Construct {
         "../../../backend/video-summary-generator/handler.ts"
       ),
       timeout: cdk.Duration.minutes(15),
-      depsLockFilePath: path.join(
-        __dirname,
-        "../../../backend/video-summary-generator/package-lock.json"
-      ),
+      depsLockFilePath: path.join(__dirname, "../../../package-lock.json"),
+      logGroup: new logs.LogGroup(this, "SummaryGenHandlerLogGroup", {
+        retention: logs.RetentionDays.ONE_WEEK,
+        removalPolicy: cdk.RemovalPolicy.DESTROY,
+      }),
       environment: {
         ACCOUNT_ID: cdk.Stack.of(this).account,
         REGION: cdk.Stack.of(this).region,

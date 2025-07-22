@@ -1,5 +1,6 @@
 import { Construct } from "constructs";
-import { CfnOutput, Duration, Stack } from "aws-cdk-lib";
+import * as cdk from "aws-cdk-lib";
+import { CfnOutput, Duration, Stack, RemovalPolicy } from "aws-cdk-lib";
 import { Auth } from "./auth";
 import * as appsync from "aws-cdk-lib/aws-appsync";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
@@ -7,6 +8,7 @@ import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import * as path from "path";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import * as iam from "aws-cdk-lib/aws-iam";
+import * as logs from "aws-cdk-lib/aws-logs";
 import { Database } from "./database";
 
 export interface VideoCallProps {
@@ -28,10 +30,11 @@ export class VideoCall extends Construct {
       {
         entry: path.join(__dirname, "../../../backend/video-call/resolvers.ts"),
         timeout: Duration.seconds(30),
-        depsLockFilePath: path.join(
-          __dirname,
-          "../../../backend/video-call/package-lock.json"
-        ),
+        depsLockFilePath: path.join(__dirname, "../../../package-lock.json"),
+        logGroup: new logs.LogGroup(this, "ChimeResolverFunctionLogGroup", {
+          retention: logs.RetentionDays.ONE_WEEK,
+          removalPolicy: cdk.RemovalPolicy.DESTROY,
+        }),
         environment: {
           ACCOUNT_ID: Stack.of(this).account,
           REGION: Stack.of(this).region,

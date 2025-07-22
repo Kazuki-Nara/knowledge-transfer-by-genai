@@ -33,6 +33,9 @@ const getSigningKey = (kid: string, jwksUri: string): Promise<string> => {
       if (err) {
         return reject(err);
       }
+      if (!key) {
+        return reject(new Error("Signing key not found"));
+      }
       const signingKey = key.getPublicKey();
       resolve(signingKey);
     });
@@ -57,6 +60,9 @@ const verifyToken = async (
   }
 
   const { kid } = decodedToken.header;
+  if (!kid) {
+    throw new Error("Token header missing 'kid' property");
+  }
   const jwksUri = `${issuer}/.well-known/jwks.json`;
   const signingKey = await getSigningKey(kid, jwksUri);
 
