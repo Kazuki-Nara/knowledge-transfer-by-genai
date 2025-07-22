@@ -68,8 +68,14 @@ export class UsEast1Stack extends cdk.Stack {
     {
       const authFunction = new NodejsFunction(this, "AuthFunction@Edge", {
         runtime: Runtime.NODEJS_20_X,
-        entry: path.join(__dirname, "../lib/constructs/lambda/auth-furl.ts"),
-        bundling: {},
+        entry: path.join(__dirname, "constructs/lambda/auth-furl.ts"),
+        depsLockFilePath: path.join(
+          __dirname,
+          "constructs/lambda/package-lock.json"
+        ),
+        bundling: {
+          nodeModules: ["jsonwebtoken", "jwks-rsa"],
+        },
       });
       this.functionVersionParameter = new ssm.StringParameter(
         this,
