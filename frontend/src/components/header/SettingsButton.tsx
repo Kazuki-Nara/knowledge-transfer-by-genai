@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { LuMoreVertical } from "react-icons/lu";
+import { LuMoveVertical } from "react-icons/lu";
 
 export interface SettingsButtonProps {
   signOut?: () => void;
@@ -24,7 +24,7 @@ function SettingsButton({ signOut, userName, email }: SettingsButtonProps) {
           size="icon"
           className="size-9 px-0 py-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0"
         >
-          <LuMoreVertical className="size-[1.2rem]" />
+          <LuMoveVertical className="size-[1.2rem]" />
           <span className="sr-only">Toggle settings</span>
         </Button>
       </DropdownMenuTrigger>
