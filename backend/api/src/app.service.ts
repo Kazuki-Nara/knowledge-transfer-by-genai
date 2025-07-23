@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { findMeetingById } from "@industrial-knowledge-transfer-by-genai/common";
+import { findMeetingById } from "./shared";
 
 @Injectable()
 export class AppService {

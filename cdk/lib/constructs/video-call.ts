@@ -30,7 +30,28 @@ export class VideoCall extends Construct {
       {
         entry: path.join(__dirname, "../../../backend/video-call/resolvers.ts"),
         timeout: Duration.seconds(30),
-        depsLockFilePath: path.join(__dirname, "../../../package-lock.json"),
+        depsLockFilePath: path.join(
+          __dirname,
+          "../../../backend/video-call/package-lock.json"
+        ),
+        // bundling: {
+        //   nodeModules: ["@aws-sdk/client-dynamodb", "@aws-sdk/lib-dynamodb"],
+        //   externalModules: [],
+        //   commandHooks: {
+        //     beforeBundling(inputDir: string, outputDir: string): string[] {
+        //       return [
+        //         `mkdir -p ${outputDir}/shared`,
+        //         `cp -r ${path.resolve(__dirname, "../../../shared/dist")}/* ${outputDir}/shared/`,
+        //       ];
+        //     },
+        //     beforeInstall() {
+        //       return [];
+        //     },
+        //     afterBundling() {
+        //       return [];
+        //     },
+        //   },
+        // },
         logGroup: new logs.LogGroup(this, "ChimeResolverFunctionLogGroup", {
           retention: logs.RetentionDays.ONE_WEEK,
           removalPolicy: cdk.RemovalPolicy.DESTROY,

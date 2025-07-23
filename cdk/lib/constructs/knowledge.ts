@@ -74,7 +74,8 @@ export class Knowledge extends Construct {
         },
       ],
       analyzer,
-      precision: "2",
+      // Ref: https://github.com/awslabs/generative-ai-cdk-constructs/blob/8a599c34f1d5cfa6820bc6d6166b315d23ef558d/src/cdk-lib/bedrock/knowledge-bases/vector-knowledge-base.ts#L605
+      precision: "float",
       distanceType: "l2",
     });
 

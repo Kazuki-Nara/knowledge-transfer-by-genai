@@ -10,11 +10,7 @@ import {
   Sse,
 } from "@nestjs/common";
 import { AppService } from "./app.service";
-import {
-  Alert,
-  Meeting,
-  Status,
-} from "@industrial-knowledge-transfer-by-genai/common";
+import { Alert, Meeting, Status } from "./shared";
 import { interval, map } from "rxjs";
 
 @Controller()

@@ -4,15 +4,18 @@
   "description": "",
   "main": "resolvers.ts",
   "scripts": {
+    "build": "esbuild resolvers.ts --bundle --platform=node --outfile=dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@industrial-knowledge-transfer-by-genai/common": "file:../common",
     "@aws-sdk/client-chime-sdk-media-pipelines": "^3.623.0",
     "@aws-sdk/client-chime-sdk-meetings": "^3.533.0",
     "@aws-sdk/client-cognito-identity-provider": "^3.549.0",
+    "@aws-sdk/client-dynamodb": "^3.624.0",
+    "@aws-sdk/lib-dynamodb": "^3.624.0",
+    "@aws-sdk/util-dynamodb": "^3.624.0",
     "amazon-chime-sdk-js": "^3.23.0",
     "uuid": "^9.0.1"
   },
