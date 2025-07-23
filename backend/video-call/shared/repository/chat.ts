@@ -5,7 +5,7 @@ import {
   QueryCommand,
   UpdateCommand,
 } from "@aws-sdk/lib-dynamodb";
-import { Conversation, Alert } from "../@types";
+import { Conversation, Alert } from "../types";
 
 const ALERT_TABLE_NAME = process.env.ALERT_TABLE_NAME || "alert_table";
 

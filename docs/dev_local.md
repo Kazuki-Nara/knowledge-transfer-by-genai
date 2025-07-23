@@ -44,5 +44,11 @@ VITE_APP_ALERT_API_ENDPOINT="http://localhost:3000/api"
 プロジェクトのルートディレクトリで下記を実行
 
 ```sh
+# 共有コードをビルド
+npm run build:shared
+
+# 開発サーバーを起動
 npm run dev
 ```
+
+これにより、バックエンドAPIとフロントエンドの開発サーバーが起動します。

@@ -3,7 +3,6 @@
 There are two ways to deploy this application:
 
 1. **CloudShell Deployment** (recommended for quick start)
-
    - For details, please see the "Quick Start (CloudShell Deployment)" section in [README-en.md](../README-en.md#quick-start-cloudshell-deployment).
 
 2. **CDK Deployment** (recommended for customization)
@@ -48,7 +47,6 @@ npm i -g aws-cdk
 
 ```sh
 cd knowledge-transfer-by-genai
-npm install
 npm run build
 ```
 
@@ -61,7 +59,6 @@ cdk bootstrap aws://<account id>/ap-northeast-1
 ```
 
 - Edit the following items in [cdk.json](../cdk/cdk.json) as needed
-
   - `bedrockRegion`: Region for using the chat response model (default: us-west-2)
   - `allowedIpV4AddressRanges`, `allowedIpV6AddressRanges`: Specify allowed IP address ranges
 

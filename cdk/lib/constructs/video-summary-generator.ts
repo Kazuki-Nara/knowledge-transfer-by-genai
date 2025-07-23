@@ -38,7 +38,28 @@ export class VideoSummaryGenerator extends Construct {
         "../../../backend/video-summary-generator/handler.ts"
       ),
       timeout: cdk.Duration.minutes(15),
-      depsLockFilePath: path.join(__dirname, "../../../package-lock.json"),
+      depsLockFilePath: path.join(
+        __dirname,
+        "../../../backend/video-summary-generator/package-lock.json"
+      ),
+      // bundling: {
+      //   nodeModules: ["@aws-sdk/client-dynamodb", "@aws-sdk/lib-dynamodb"],
+      //   externalModules: [],
+      //   commandHooks: {
+      //     beforeBundling(inputDir: string, outputDir: string): string[] {
+      //       return [
+      //         `mkdir -p ${outputDir}/shared`,
+      //         `cp -r ${path.resolve(__dirname, "../../../shared/dist")}/* ${outputDir}/shared/`,
+      //       ];
+      //     },
+      //     beforeInstall() {
+      //       return [];
+      //     },
+      //     afterBundling() {
+      //       return [];
+      //     },
+      //   },
+      // },
       logGroup: new logs.LogGroup(this, "SummaryGenHandlerLogGroup", {
         retention: logs.RetentionDays.ONE_WEEK,
         removalPolicy: cdk.RemovalPolicy.DESTROY,

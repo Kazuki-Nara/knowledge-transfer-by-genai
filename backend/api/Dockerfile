@@ -1,28 +1,30 @@
-FROM public.ecr.aws/docker/library/node:21-bullseye-slim as builder
+FROM public.ecr.aws/docker/library/node:22-bullseye-slim AS builder
 
-WORKDIR /app
-COPY . .
+WORKDIR /project
 
-WORKDIR /app/api
-RUN npm i && npm run build
 
-FROM public.ecr.aws/docker/library/node:21-bullseye-slim as runner
+COPY backend/api/package.json backend/api/package-lock.json /project/backend/api/
 
-# Install lambda web adapter
+WORKDIR /project/backend/api
+RUN npm ci
+
+COPY backend/api /project/backend/api
+WORKDIR /project/backend/api
+RUN npm run build
+
+FROM public.ecr.aws/docker/library/node:22-bullseye-slim AS runner
+
+# Lambda Web Adapter
 COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.8.4 /lambda-adapter /opt/extensions/lambda-adapter
 
-# Note that the lambda web adapter is listening on port 8080 by default
-# Ref: https://github.com/awslabs/aws-lambda-web-adapter#usage
-ENV PORT=8080 NODE_ENV=production
-# Enable SSE
-ENV AWS_LWA_INVOKE_MODE response_stream
+ENV PORT=8080 \
+    NODE_ENV=production \
+    AWS_LWA_INVOKE_MODE=response_stream
 
 WORKDIR ${LAMBDA_TASK_ROOT}
-COPY --from=builder /app/common ./common
-COPY --from=builder /app/api/package.json ./package.json
-COPY --from=builder /app/api/dist ./dist
-COPY --from=builder /app/api/node_modules ./node_modules
 
-EXPOSE 8080
+COPY --from=builder /project/backend/api/dist          ./dist
+COPY --from=builder /project/backend/api/package.json  ./package.json
+COPY --from=builder /project/backend/api/node_modules  ./node_modules
+
 CMD ["npm", "run", "start:prod"]
-

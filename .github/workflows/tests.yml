@@ -20,14 +20,37 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
-          cache: 'npm'
+          cache: "npm"
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Build shared code
+        working-directory: ./shared
+        run: |
+          npm ci
+          npm run build
 
-      - name: Build
-        run: npm run build
-        # turbo run build --filter=!cdk will be run
+      - name: Build backend API
+        working-directory: ./backend/api
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build video call service
+        working-directory: ./backend/video-call
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build video summary generator
+        working-directory: ./backend/video-summary-generator
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: |
+          npm ci
+          npm run build
 
   cdk-synth:
     runs-on: ubuntu-latest
@@ -39,10 +62,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
-          cache: 'npm'
+          cache: "npm"
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Build shared code
+        working-directory: ./shared
+        run: |
+          npm ci
+          npm run build
 
       - name: Install CDK dependencies
         working-directory: ./cdk
@@ -50,4 +76,4 @@ jobs:
 
       - name: CDK Synth
         working-directory: ./cdk
-        run: npm run cdk synth
+        run: npm run synth

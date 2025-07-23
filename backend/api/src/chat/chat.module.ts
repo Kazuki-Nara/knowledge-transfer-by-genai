@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ChatController } from "./chat.controller";
 import { ChatService } from "./chat.service";
-import { ChatRepository } from "@industrial-knowledge-transfer-by-genai/common";
+import { ChatRepository } from "../shared";
 
 @Module({
   controllers: [ChatController],

@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Sse, Param, Get, Res } from "@nestjs/common";
 import { ChatService } from "./chat.service";
-import { PostMessageRequest } from "@industrial-knowledge-transfer-by-genai/common";
+import { PostMessageRequest } from "../shared";
 import { Response } from "express";
 
 @Controller("chat")

@@ -7,7 +7,7 @@ import {
   BedrockRuntimeClient,
   InvokeModelCommand,
 } from "@aws-sdk/client-bedrock-runtime";
-import { updateMeeting } from "@industrial-knowledge-transfer-by-genai/common";
+import { updateMeeting } from "./shared/repository/meeting";
 
 const { KNOWLEDGE_BUCKET_NAME, BEDROCK_REGION, BEDROCK_MODEL_ID } = process.env;
 

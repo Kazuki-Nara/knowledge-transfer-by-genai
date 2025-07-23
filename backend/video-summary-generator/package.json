@@ -4,6 +4,7 @@
   "description": "",
   "main": "handler.ts",
   "scripts": {
+    "build": "esbuild handler.ts --bundle --platform=node --outfile=dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -11,10 +12,12 @@
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.624.0",
     "@aws-sdk/client-chime-sdk-media-pipelines": "^3.624.0",
+    "@aws-sdk/client-dynamodb": "^3.624.0",
     "@aws-sdk/client-s3": "^3.624.0",
     "@aws-sdk/client-transcribe": "^3.624.0",
     "@aws-sdk/credential-providers": "^3.624.0",
-    "@industrial-knowledge-transfer-by-genai/common": "file:../common",
+    "@aws-sdk/lib-dynamodb": "^3.624.0",
+    "@aws-sdk/util-dynamodb": "^3.624.0",
     "@types/aws-lambda": "^8.10.143",
     "typescript": "^5.5.4"
   },

@@ -44,5 +44,11 @@ VITE_APP_ALERT_API_ENDPOINT="http://localhost:3000/api"
 Execute the following in the project root directory
 
 ```sh
+# Build shared code first
+npm run build:shared
+
+# Start development servers
 npm run dev
 ```
+
+This will start both the backend API and frontend development servers.

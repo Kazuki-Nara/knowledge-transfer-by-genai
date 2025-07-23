@@ -4,7 +4,7 @@ import {
   Conversation,
   MessageContent,
   ChatRepository,
-} from "@industrial-knowledge-transfer-by-genai/common";
+} from "../shared";
 import {
   BedrockRuntimeClient,
   ConverseStreamCommand,

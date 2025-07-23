@@ -11,7 +11,7 @@ import { Platform } from "aws-cdk-lib/aws-ecr-assets";
 import { Database } from "./database";
 import { Knowledge } from "./knowledge";
 import { S3Buckets } from "./s3buckets";
-import { Duration, Stack } from "aws-cdk-lib";
+import { Duration, IgnoreMode, Stack } from "aws-cdk-lib";
 
 export interface ApiProps {
   auth: Auth;
@@ -30,13 +30,13 @@ export class Api extends Construct {
     const { database, buckets, corsAllowOrigins: allowOrigins = ["*"] } = props;
 
     const handler = new DockerImageFunction(this, "Handler", {
-      code: DockerImageCode.fromImageAsset(
-        path.join(__dirname, "../../../backend"),
-        {
-          platform: Platform.LINUX_AMD64,
-          file: "api/Dockerfile",
-        }
-      ),
+      code: DockerImageCode.fromImageAsset(path.join(__dirname, "../../.."), {
+        platform: Platform.LINUX_AMD64,
+        file: "backend/api/Dockerfile",
+        ignoreMode: IgnoreMode.GLOB, // Changed from DOCKER to GLOB for better control
+        exclude: ["cdk", "cdk.out", "**/node_modules", ".git", "*.map"],
+        // We can't use include, so we need to make sure our exclude list doesn't remove important files
+      }),
       memorySize: 1024,
       timeout: Duration.minutes(1),
       environment: {

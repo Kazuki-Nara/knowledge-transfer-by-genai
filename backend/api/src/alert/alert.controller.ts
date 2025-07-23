@@ -10,11 +10,7 @@ import {
   Sse,
 } from "@nestjs/common";
 import { AlertService } from "./alert.service";
-import {
-  Alert,
-  Meeting,
-  Status,
-} from "@industrial-knowledge-transfer-by-genai/common";
+import { Alert, Meeting, Status } from "../shared";
 
 @Controller("alert")
 export class AlertController {

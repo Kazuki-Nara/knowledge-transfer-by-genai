@@ -10,7 +10,6 @@
     "test": "jest",
     "cdk": "cdk"
   },
-  
   "devDependencies": {
     "@aws-prototyping-sdk/pdk-nag": "^0.19.68",
     "@types/jest": "^29.5.12",
@@ -22,7 +21,7 @@
     "typescript": "~5.5.3"
   },
   "dependencies": {
-    "@cdklabs/generative-ai-cdk-constructs": "^0.1.234",
+    "@cdklabs/generative-ai-cdk-constructs": "^0.1.309",
     "aws-cdk-lib": "^2.206.0",
     "constructs": "^10.0.0",
     "deploy-time-build": "^0.3.21",

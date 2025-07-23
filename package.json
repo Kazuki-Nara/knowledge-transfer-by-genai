@@ -2,14 +2,20 @@
   "name": "industrial-knowledge-transfer-by-genai",
   "private": true,
   "scripts": {
-    "build": "npx turbo run build --filter=!cdk --no-cache",
-    "dev": "npx turbo dev --filter=!cdk",
-    "lint": "npx turbo lint",
+    "build": "npm run build:api && npm run build:video-call && npm run build:video-summary",
+    "build:api": "cd backend/api && npm ci && npm run build",
+    "build:video-call": "cd backend/video-call && npm ci && npm run build",
+    "build:video-summary": "cd backend/video-summary-generator && npm ci && npm run build",
+    "build:frontend": "cd frontend && npm ci && npm run build",
+    "build:cdk": "cd cdk && npm ci && npm run build",
+    "dev": "npm run build:shared && npm run dev:api & npm run dev:frontend",
+    "dev:api": "cd backend/api && npm run start:dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "lint": "prettier --check \"**/*.{ts,tsx,md}\"",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "prettier": "^3.2.5",
-    "turbo": "^2.0.14",
     "typescript": "^5.4.5"
   },
   "optionalDependencies": {
@@ -18,11 +24,5 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "npm@10.2.3",
-  "workspaces": [
-    "backend/*",
-    "frontend",
-    "cdk",
-    "cdk/lib/constructs/lambda"
-  ]
+  "packageManager": "npm@10.2.3"
 }

@@ -1,5 +1,5 @@
 import { S3Client, HeadObjectCommand } from "@aws-sdk/client-s3";
-import { updateMeeting } from "@industrial-knowledge-transfer-by-genai/common";
+import { updateMeeting } from "./shared/repository/meeting";
 
 const { CONCATENATED_BUCKET_NAME } = process.env;
 

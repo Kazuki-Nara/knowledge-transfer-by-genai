@@ -6,7 +6,7 @@ import {
 import { v4 } from "uuid";
 import { AppSyncResolverHandler } from "aws-lambda";
 import { startCapture, createConcat } from "./lib/record";
-import { storeMeeting } from "@industrial-knowledge-transfer-by-genai/common";
+import { storeMeeting } from "./shared/repository/meeting";
 
 const { RECORDING_BUCKET_ARN, CONCATENATED_BUCKET_ARN, ACCOUNT_ID } =
   process.env;

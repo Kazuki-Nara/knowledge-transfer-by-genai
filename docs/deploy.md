@@ -3,7 +3,6 @@
 このアプリケーションをデプロイするには、以下の2つの方法があります：
 
 1. **CloudShellを使用したデプロイ**（簡単に始めたい方向け）
-
    - 詳細は[README.md](../README.md#クイックスタートcloudshell-デプロイ)の「クイックスタート（CloudShell デプロイ）」セクションをご覧ください。
 
 2. **CDKを使用したデプロイ**（カスタマイズが必要な場合に推奨）
@@ -48,7 +47,6 @@ npm i -g aws-cdk
 
 ```sh
 cd knowledge-transfer-by-genai
-npm install
 npm run build
 ```
 
@@ -61,7 +59,6 @@ cdk bootstrap aws://<account id>/ap-northeast-1
 ```
 
 - 必要に応じて[cdk.json](../cdk/cdk.json)の下記項目を編集します
-
   - `bedrockRegion`: チャット応答モデルを利用するリージョン (デフォルト: us-west-2)
   - `allowedIpV4AddressRanges`, `allowedIpV6AddressRanges`: 許可する IP アドレス範囲の指定
 
