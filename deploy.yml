@@ -184,7 +184,7 @@ Resources:
                   "cat cdk/cdk.json",
                   "echo 'プロジェクトの準備...'",
                   "# コードのビルド",
-                  "npm run build"
+                  "npm run build",
                   
                   "# CDKのデプロイ",
                   "cd cdk",
